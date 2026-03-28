@@ -1,0 +1,80 @@
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: connectdot
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/init-db.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d connectdot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - minio_data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - frontend_dist:/app/dist
+
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: connectdot
+      DB_USER: postgres
+      DB_PASS: password
+      MINIO_ENDPOINT: minio
+      MINIO_PORT: 9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+      MINIO_BUCKET: connectdot
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ${PWD}/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - frontend_dist:/usr/share/nginx/html
+    depends_on:
+      - frontend
+      - backend
+      - minio
+    command: ["nginx", "-g", "daemon off;", "-c", "/etc/nginx/nginx.conf"]  
+
+volumes:
+  postgres_data:
+  minio_data:
+  frontend_dist:  

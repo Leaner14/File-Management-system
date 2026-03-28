@@ -1,0 +1,247 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f7fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  color: #2c3e50;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.upload-section, .files-section {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.upload-section h2, .files-section h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.message {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 500px;
+}
+
+.input, .textarea, .file-input {
+  padding: 12px 16px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.input:focus, .textarea:focus, .file-input:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.file-input {
+  padding: 8px;
+  background: #f8f9fa;
+}
+
+.upload-btn {
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.upload-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+}
+
+.upload-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.files-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.file-card {
+  border: 1px solid #e1e5e9;
+  border-radius: 12px;
+  padding: 24px;
+  background: white;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.file-card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+}
+
+.file-card h3 {
+  color: #2c3e50;
+  margin-bottom: 8px;
+  font-size: 1.25rem;
+}
+
+.file-card p {
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.file-path {
+  font-size: 0.9rem;
+  color: #95a5a6;
+  font-family: monospace;
+  word-break: break-all;
+}
+
+.download-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #27ae60, #219a52);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 16px;
+}
+
+.download-btn:hover {
+  background: linear-gradient(135deg, #219a52, #1e8449);
+}
+
+.file-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.delete-btn {
+  flex: 1;
+  padding: 12px;
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.delete-btn:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-style: italic;
+}
+
+.no-files {
+  text-align: center;
+  padding: 40px;
+  color: #95a5a6;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app {
+    padding: 10px;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .upload-section, .files-section {
+    padding: 20px;
+  }
+
+  .files-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .upload-form {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.75rem;
+  }
+}
