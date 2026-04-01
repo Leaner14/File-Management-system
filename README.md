@@ -6,7 +6,7 @@ A full-stack web application for uploading files with metadata, powered by:
 - **Backend**: Node.js + Express
 - **Database**: PostgreSQL
 - **File Storage**: MinIO (S3-compatible)
-- **Reverse Proxy**: Nginx
+- **Reverse Proxy**: Nginx  
 - **Containerization**: Docker + Docker Compose
 
 ## Features
