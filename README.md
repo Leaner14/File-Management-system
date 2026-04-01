@@ -1,4 +1,4 @@
-# ConnectDot - File Upload + Metadata Manager
+# ConnectDot - File Upload + Metadata Manager  
 
 A full-stack web application for uploading files with metadata, powered by:
 
